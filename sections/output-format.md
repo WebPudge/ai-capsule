@@ -18,6 +18,7 @@
 - **Cross-domain:** [cross-domain inspiration point]
 
 **Summary:** [article entity + core value, one sentence, no filler phrases]
+
 **Value:** [based on F score — F≥8: write specific intersection with your tech stack (what you can do / save / avoid); F=4-7: write indirect value; F≤3: write "A quick scan for industry context is enough"]
 
 ---

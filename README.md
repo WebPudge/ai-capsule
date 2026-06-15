@@ -113,6 +113,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 - **Cross-domain:** No cross-domain inspiration
 
 **Summary:** Native macOS app that adds a real-time HUD to Claude Code — Timeline (streaming prompt/tool call view), Context window usage monitor, Pulse throughput, Skills & MCP visualizer. $29 one-time.
+
 **Value:** You use Claude Code heavily — Conan immediately shows how much context each conversation consumes and which tools fire how often, so you know when to /compact before the context fills up silently.
 
 ---
@@ -132,6 +133,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 - **Cross-domain:** No cross-domain perspective
 
 **Summary:** Simon Willison uses Claude Code to research how to map SQL query result columns back to their source table.column. Explores three approaches — apsw, ctypes bridge to SQLite C API, and EXPLAIN analysis — with code published on GitHub.
+
 **Value:** When your RAG Agent executes SQL and needs to explain the results, column_provenance.py lets it return "users.name from the users table" instead of a bare column name — a direct upgrade for multi-table JOIN explainability.
 
 ---
@@ -151,6 +153,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 - **Cross-domain:** Pulls in labor economics data (WARN Act) to analyze a tech trend
 
 **Summary:** Arvind Narayanan and Sayash Kappor argue that AI hasn't replaced software engineers because of three irreducible bottlenecks: decision-making and specification, verification and accountability, and deep contextual understanding. Backed by NY WARN Act filings showing zero companies attributed layoffs to AI.
+
 **Value:** You're an AI application engineer — this piece articulates clearly why you haven't been replaced. Decision-making and verification are exactly what you do every day; use this framework to explain AI tool boundaries to PMs, managers, or clients.
 
 ---
