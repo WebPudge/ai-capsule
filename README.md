@@ -61,7 +61,7 @@ Then start Claude Code and say `daily`.
 ### OpenClaw
 
 ```bash
-openclaw skills install https://github.com/WebPudge/ai-capsule
+openclaw skills install ai-capsule
 cd ~/.openclaw/skills/ai-capsule
 bash scripts/setup-env.sh
 ```
