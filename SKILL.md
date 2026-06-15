@@ -15,6 +15,12 @@ metadata:
 
 # AI Capsule — Personal AI News Value Evaluator
 
+Pull from 16 AI news sources daily (HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more), score every article across 7 dimensions, and rank the digest by how relevant each article is to *your* background. Nothing is filtered out — everything is ranked so the articles most useful to you appear first.
+
+**Trigger words:** say `daily`, `daily mode`, or `每日模式` to run the full digest. Paste a URL or article text to score a single article.
+
+**First time:** run `bash $SKILL_DIR/scripts/setup-env.sh` once, then say `daily` — Claude will walk you through a short setup (role, familiar areas, output language).
+
 ## Initialization
 
 > **First time only:** run `bash $SKILL_DIR/scripts/setup-env.sh` to set up the Python venv. Config is created on first run via guided setup.
