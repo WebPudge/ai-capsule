@@ -2,7 +2,9 @@
 
 [English](README.md)
 
-一个 Claude Code skill，把每天的 AI 资讯变成专属于你的日报——按你的技术栈评分排序。
+一个 AI agent skill，把每天的 AI 资讯变成专属于你的日报——按你的技术栈评分排序。
+
+支持 **Claude Code** 和 **OpenClaw**，任何兼容 `SKILL.md` 的 agent 运行时均可使用。
 
 每天从 16 个来源抓取内容（HuggingFace 论文、OpenAI、Anthropic、DeepMind、Simon Willison、GitHub Trending、HN、Reddit 等），对每篇文章按 7 个维度打分（相关性、实用性、新颖性、深度、震撼感、认知冲击、跨界启发），再结合你的背景算出**个人匹配度**。最终你看到的日报里，对你最有用的文章排在最前面。
 
@@ -40,20 +42,27 @@
 
 ## 安装
 
-**1. 克隆到 Claude skills 目录：**
+### Claude Code
 
 ```bash
 git clone https://github.com/WebPudge/ai-capsule ~/.claude/skills/ai-capsule
 cd ~/.claude/skills/ai-capsule
-```
-
-**2. 初始化 Python 环境：**
-
-```bash
 bash scripts/setup-env.sh
 ```
 
-**3. 打开 Claude Code，说 `daily`。**
+然后打开 Claude Code，说 `daily`。
+
+### OpenClaw
+
+```bash
+openclaw skills install https://github.com/WebPudge/ai-capsule
+cd ~/.openclaw/skills/ai-capsule
+bash scripts/setup-env.sh
+```
+
+然后在 OpenClaw 会话中说 `daily`。
+
+---
 
 Claude 会引导你完成简短配置（角色、熟悉方向、输出语言），把配置写到 `~/.ai-capsule/config.yaml`。你的数据存在 `~/.ai-capsule/data/`，与 skill 本体分离，升级 skill 不会丢数据。
 

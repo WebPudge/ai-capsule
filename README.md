@@ -2,7 +2,9 @@
 
 [中文文档](README.zh.md)
 
-A Claude Code skill that turns daily AI news into a personal digest — scored and ranked for your specific tech stack.
+An AI agent skill that turns daily AI news into a personal digest — scored and ranked for your specific tech stack.
+
+Works with **Claude Code** and **OpenClaw**. Any agent runtime that supports `SKILL.md` can use it.
 
 Every day it pulls from 16 sources (HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more), scores each article across 7 dimensions (Relevance, Utility, Novelty, Depth, Wow, Perspective, Cross-domain), and applies a **Personal Fit** score calibrated to your background. The result is a ranked daily report where the most useful articles for *you* float to the top.
 
@@ -42,20 +44,27 @@ Action tags tell you what to do with each card:
 
 ## Installation
 
-**1. Clone into your Claude skills directory:**
+### Claude Code
 
 ```bash
 git clone https://github.com/WebPudge/ai-capsule ~/.claude/skills/ai-capsule
 cd ~/.claude/skills/ai-capsule
-```
-
-**2. Set up the Python environment:**
-
-```bash
 bash scripts/setup-env.sh
 ```
 
-**3. Start Claude Code and say `daily`.**
+Then start Claude Code and say `daily`.
+
+### OpenClaw
+
+```bash
+openclaw skills install https://github.com/WebPudge/ai-capsule
+cd ~/.openclaw/skills/ai-capsule
+bash scripts/setup-env.sh
+```
+
+Then say `daily` in your OpenClaw session.
+
+---
 
 Claude will walk you through a short setup (role, familiar areas, output language) and write your config to `~/.ai-capsule/config.yaml`. Your data lives in `~/.ai-capsule/data/` — separate from the skill, safe across updates.
 
