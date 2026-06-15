@@ -89,58 +89,68 @@ Say any of these to Claude:
 
 ## Daily digest example
 
-Real output from a June 2026 digest (engineer profile, familiar with LLM apps / RAG / Agent frameworks):
-
-```
-### #1 ★★★★★ 8.4/10 · Evoflux: Inference-Time Evolution of Executable Tool Workflows for Complex Reasoning
-
-🔗 https://arxiv.org/abs/2606.12674
-📌 HuggingFace Papers · engineer · learn mode · 🎯 READ
-`R:9` `U:7` `N:9` `D:8` | `W:8` `P:8` `S:6` | `F:10`
-
-> R: Inference-time adaptive tool workflows are directly relevant to Agent frameworks
-> U: Provides new design patterns for automatic workflow optimization, with paper code
-> N: Dynamically evolving workflows at inference time is a paradigm shift from static tool calls
-> D: arxiv paper with full methodology and experimental results
-> W: The idea of letting LLMs self-optimize their call flow at inference time is elegantly counter-intuitive
-> P: Introduces "workflow-as-search-space" — a new way to think about tool use design
-> S: Evolutionary algorithm concepts applied to LLM tool calling
-
-**Summary:** Method for dynamically evolving executable tool workflows at inference time, letting LLMs automatically optimize tool call sequences for complex reasoning tasks.
-**Value:** New direction for your Agent workflow design — shift from statically defined flows to inference-time self-evolution. The paper architecture is a concrete reference for retrofitting your existing tool use system.
+Real output from a June 2026 digest — engineer profile, familiar with LLM app development / RAG / Agent frameworks:
 
 ---
 
-### #2 ★★★★☆ 7.8/10 · Initial impressions of Claude Fable 5
+### #1 ★★★★☆ 6.9/10 · [Conan — Claude Code Visual Control Panel](https://conan.sh)
 
-🔗 https://simonwillison.net/2026/Jun/9/claude-fable-5/
-📌 Simon Willison · engineer · learn mode · 🎯 READ
-`R:9` `U:8` `N:8` `D:7` | `W:7` `P:7` `S:4` | `F:10`
+🔗 [https://conan.sh](https://conan.sh)
+📌 **Product Hunt Daily** · engineer · learn mode · 🎯 **TRY**
+`R:9` `U:8` `N:7` `D:5` | `W:6` `P:6` `S:3` | `F:9`
 
-> R: Claude Fable 5 directly affects engineers building on the Claude API
-> U: Concrete capability test cases to decide whether to migrate and what to watch out for
-...
+> R: A direct companion tool for Claude Code, immediately useful for engineers who use it heavily
+> U: Downloadable macOS app, dmg available on GitHub Releases, usable today
+> N: A visual HUD for Claude Code fills a real gap — context window monitoring solves a daily pain point
+> D: Product page, clear feature descriptions but no technical implementation details
+> W: Context monitoring for Claude Code solves a real developer pain point more elegantly than expected
+> P: Visualizing an AI coding tool's runtime state as a HUD reframes the experience from "black box" to observable
+> S: No cross-domain inspiration
 
-**Summary:** Simon Willison's first-hand evaluation of Claude Fable 5 — capability benchmarks, new behavior patterns, differences from the previous generation.
-**Value:** You're building on the Claude API — Fable 5 behavior changes affect you directly. Read this to decide whether to upgrade now and whether you need a compatibility shim.
+**Summary:** Native macOS app that adds a real-time HUD to Claude Code — Timeline (streaming prompt/tool call view), Context window usage monitor, Pulse throughput, Skills & MCP visualizer. $29 one-time.
+**Value:** You use Claude Code heavily — Conan immediately shows how much context each conversation consumes and which tools fire how often, so you know when to /compact before the context fills up silently.
 
 ---
 
-### #3 ★★★★☆ 7.8/10 · Respan Gateway
+### #3 ★★★★☆ 7.0/10 · [Mapping SQLite result columns back to their source table.column](https://simonwillison.net/2026/Jun/13/sqlite-column-provenance/)
 
-🔗 https://respan.ai
-📌 Product Hunt Daily · engineer · learn mode · 🎯 TRY
-`R:9` `U:9` `N:7` `D:5` | `W:6` `P:6` `S:4` | `F:10`
+🔗 [https://simonwillison.net/2026/Jun/13/sqlite-column-provenance/](https://simonwillison.net/2026/Jun/13/sqlite-column-provenance/)
+📌 **Simon Willison** · engineer · learn mode · 🎯 **TRY**
+`R:7` `U:8` `N:7` `D:7` | `W:5` `P:5` `S:3` | `F:8`
 
-> R: LLM gateway tooling directly applies to production LLM app engineering
-> U: Two-line integration, built-in monitoring and evals — immediately usable
-...
+> R: SQL result provenance is a real problem in RAG and Agent tool-call workflows
+> U: All three approaches include code; column_provenance.py on GitHub is ready to use
+> N: Bridging ctypes to sqlite3_column_table_name() is a trick most developers don't know
+> D: Covers the rationale and tradeoffs of three approaches with working code
+> W: The ctypes bypass of Python's stdlib has some elegance, though it's a known pattern
+> P: Reveals that SQLite internally computes this via SQLITE_ENABLE_COLUMN_METADATA — a hidden capability
+> S: No cross-domain perspective
 
-**Summary:** Two-line LLM gateway with built-in monitoring and evaluation. #3 on Product Hunt (422 votes).
-**Value:** Worth a direct trial to see if it can replace your hand-rolled LLM routing and monitoring layer, saving production infrastructure time.
-```
+**Summary:** Simon Willison uses Claude Code to research how to map SQL query result columns back to their source table.column. Explores three approaches — apsw, ctypes bridge to SQLite C API, and EXPLAIN analysis — with code published on GitHub.
+**Value:** When your RAG Agent executes SQL and needs to explain the results, column_provenance.py lets it return "users.name from the users table" instead of a bare column name — a direct upgrade for multi-table JOIN explainability.
 
-The same 40 articles ranked for a fine-tuning researcher would look completely different — the Agent workflow paper above would rank lower, and model architecture papers would float to the top.
+---
+
+### #5 ★★★★☆ 6.9/10 · [Why AI hasn't replaced software engineers, and won't](https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/)
+
+🔗 [https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/](https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/)
+📌 **Simon Willison** · engineer · learn mode · 🎯 **READ**
+`R:8` `U:6` `N:6` `D:7` | `W:6` `P:8` `S:3` | `F:9`
+
+> R: Directly addresses AI's impact on software engineers — a core concern for engineer readers
+> U: Provides the NY WARN Act data as a concrete source, and the decision/verification/understanding framework
+> N: Counters the popular "threshold theory" with three specific cognitive bottlenecks — not a standard argument
+> D: Arvind Narayanan's deep analysis with academic grounding; Simon adds his own perspective
+> W: No counter-intuitive finding — the three-part framework lands in expected territory
+> P: "Decision-making and accountability matter more than code input speed" reframes what engineers actually do
+> S: Pulls in labor economics data (WARN Act) to analyze a tech trend — adjacent-domain borrowing
+
+**Summary:** Arvind Narayanan and Sayash Kappor argue that AI hasn't replaced software engineers because of three irreducible bottlenecks: decision-making and specification, verification and accountability, and deep contextual understanding. Backed by NY WARN Act filings showing zero companies attributed layoffs to AI.
+**Value:** You're an AI application engineer — this piece articulates clearly why you haven't been replaced. Decision-making and verification are exactly what you do every day; use this framework to explain AI tool boundaries to PMs, managers, or clients.
+
+---
+
+The same 31 articles ranked for a fine-tuning researcher would look completely different — the SQLite and Agent tooling pieces above would rank lower, and model architecture or training papers would float to the top.
 
 ---
 
