@@ -4,6 +4,8 @@
 
 一个 AI agent skill，把每天的 AI 资讯变成专属于你的日报——按你的技术栈评分排序。
 
+默认专注于 AI 行业资讯（HuggingFace、OpenAI、Anthropic、DeepMind、HN、Reddit……），但数据源系统本身与行业无关——放一个 `sources/finance.yaml` 或 `sources/crypto.yaml` 进去，同样的评分和日报流程就能跑起来。
+
 支持 **Claude Code** 和 **OpenClaw**，任何兼容 `SKILL.md` 的 agent 运行时均可使用。
 
 每天从 16 个来源抓取内容（HuggingFace 论文、OpenAI、Anthropic、DeepMind、Simon Willison、GitHub Trending、HN、Reddit 等），对每篇文章按 7 个维度打分（相关性、实用性、新颖性、深度、震撼感、认知冲击、跨界启发），再结合你的背景算出**个人匹配度**。最终你看到的日报里，对你最有用的文章排在最前面。
@@ -122,7 +124,7 @@ data_dir: ~/.ai-capsule/data
 
 ## 数据来源
 
-开箱即用 16 个来源：
+### 内置 AI 来源（开箱即用 16 个）
 
 **RSS（自动抓取）：** HuggingFace Papers · OpenAI Blog · Microsoft Research · Ben's Bites · Hacker News
 
@@ -130,18 +132,29 @@ data_dir: ~/.ai-capsule/data
 
 **搜索：** Reddit LocalLLaMA
 
-**新增数据源：**
+### 扩展到其他行业
+
+数据源按行业文件组织，新建 `sources/{行业}.yaml` 即可扩展：
 
 ```bash
-# RSS
+# 向 AI 行业列表新增一个来源
 bash scripts/add-source.sh --industry ai --type rss --name "我的博客" --url https://example.com/feed
 
-# URL 抓取
-bash scripts/add-source.sh --industry ai --type webfetch --name "某博客" --url https://example.com
+# 开辟新行业（金融、加密、安全等）
+cp sources/ai.yaml sources/finance.yaml
+# 然后编辑 sources/finance.yaml，填入对应领域的 feed
 
-# Tavily 搜索
-bash scripts/add-source.sh --industry ai --type tavily --name "Reddit X" --query "LLM 讨论" --domains "reddit.com"
+# 对指定行业运行日报
+# 对 Claude 说 "daily --industry finance"
 ```
+
+三种来源类型在任意行业都通用：
+
+| 类型 | 由谁抓取 | 适用场景 |
+|------|---------|---------|
+| `rss` | `fetch.py` 自动 | RSS/Atom feed、API |
+| `webfetch` | Agent 运行时 | 无 RSS 的博客、榜单、页面 |
+| `tavily` | Agent 运行时 | Reddit、论坛、基于搜索的发现 |
 
 ---
 

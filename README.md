@@ -4,6 +4,8 @@
 
 An AI agent skill that turns daily AI news into a personal digest — scored and ranked for your specific tech stack.
 
+Built around AI industry sources by default (HuggingFace, OpenAI, Anthropic, DeepMind, HN, Reddit…), but the source system is industry-agnostic — drop in a `sources/finance.yaml` or `sources/crypto.yaml` and it works the same way.
+
 Works with **Claude Code** and **OpenClaw**. Any agent runtime that supports `SKILL.md` can use it.
 
 Every day it pulls from 16 sources (HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more), scores each article across 7 dimensions (Relevance, Utility, Novelty, Depth, Wow, Perspective, Cross-domain), and applies a **Personal Fit** score calibrated to your background. The result is a ranked daily report where the most useful articles for *you* float to the top.
@@ -124,7 +126,7 @@ Override config path: `export AI_CAPSULE_CONFIG=/path/to/config.yaml`
 
 ## Data sources
 
-16 sources out of the box across RSS, URL fetch, and search:
+### Built-in AI sources (16 out of the box)
 
 **RSS (auto-fetched):** HuggingFace Papers · OpenAI Blog · Microsoft Research · Ben's Bites · Hacker News
 
@@ -132,18 +134,29 @@ Override config path: `export AI_CAPSULE_CONFIG=/path/to/config.yaml`
 
 **Search:** Reddit LocalLLaMA
 
-**Add a source:**
+### Extend to other industries
+
+Sources are organized by industry file. Add a new industry by creating `sources/{industry}.yaml`:
 
 ```bash
-# RSS feed
+# Add a source to the AI industry list
 bash scripts/add-source.sh --industry ai --type rss --name "My Blog" --url https://example.com/feed
 
-# URL to fetch
-bash scripts/add-source.sh --industry ai --type webfetch --name "My Blog" --url https://example.com
+# Start a new industry (e.g. finance, crypto, security)
+cp sources/ai.yaml sources/finance.yaml
+# then edit sources/finance.yaml with finance-specific feeds
 
-# Tavily search
-bash scripts/add-source.sh --industry ai --type tavily --name "Reddit X" --query "LLM discussion" --domains "reddit.com"
+# Run daily digest for a specific industry
+# say "daily --industry finance" to Claude
 ```
+
+Three source types are supported in any industry:
+
+| Type | Fetched by | Use for |
+|------|-----------|---------|
+| `rss` | `fetch.py` automatically | RSS/Atom feeds, APIs |
+| `webfetch` | Agent at runtime | Blogs, leaderboards, pages without RSS |
+| `tavily` | Agent at runtime | Reddit, forums, search-based discovery |
 
 ---
 
