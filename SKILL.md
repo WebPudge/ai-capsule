@@ -1,7 +1,7 @@
 ---
 name: ai-capsule
 description: Ranks your daily AI news feed by personal relevance — scores every article and surfaces the most useful ones first.
-version: 1.0.1
+version: 1.0.2
 license: MIT
 emoji: "📰"
 homepage: https://github.com/WebPudge/ai-capsule
@@ -287,4 +287,4 @@ bash $SKILL_DIR/scripts/add-source.sh --industry ai --type tavily  --name "Name"
 
 ---
 
-Source: [github.com/WebPudge/ai-capsule](https://github.com/WebPudge/ai-capsule)
+Source: [github.com/WebPudge/ai-capsule](https://github.com/WebPudge/ai-capsule) · [Feedback / Bug report → Issues](https://github.com/WebPudge/ai-capsule/issues/new)
