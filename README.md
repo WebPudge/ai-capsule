@@ -2,7 +2,9 @@
 
 [中文文档](README.zh.md)
 
-An AI agent skill that turns daily AI news into a personal digest — scored and ranked for your specific tech stack.
+An AI agent skill that curates your daily AI news feed based on what *you* actually care about.
+
+Tell it your role, your familiar areas, and what bores you — it scores every article against your profile and surfaces the ones worth your time. An Agent engineer and a fine-tuning researcher reading the same 40 articles will get completely different ranked digests.
 
 Built around AI industry sources by default (HuggingFace, OpenAI, Anthropic, DeepMind, HN, Reddit…), but the source system is industry-agnostic — drop in a `sources/finance.yaml` or `sources/crypto.yaml` and it works the same way.
 
@@ -121,6 +123,24 @@ data_dir: ~/.ai-capsule/data
 ```
 
 Override config path: `export AI_CAPSULE_CONFIG=/path/to/config.yaml`
+
+### Example: LLM application engineer
+
+```yaml
+initialized: true
+default_identity: engineer
+default_purpose: learn
+output_language: en
+familiar_areas:
+  - LLM application development
+  - RAG
+  - Agent frameworks
+  - Prompt Engineering
+dislikes: pure marketing content, trend articles with no code
+data_dir: ~/.ai-capsule/data
+```
+
+With this config, articles about RAG retrieval strategies or Agent tool-calling rank higher than general AI industry news. A paper on speech recognition scores low on Personal Fit even if the overall quality is high — it won't appear near the top of your digest.
 
 ---
 

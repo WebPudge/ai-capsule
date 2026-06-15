@@ -2,7 +2,9 @@
 
 [English](README.md)
 
-一个 AI agent skill，把每天的 AI 资讯变成专属于你的日报——按你的技术栈评分排序。
+一个 AI agent skill，根据**你真正关心的内容**筛选每天的 AI 资讯。
+
+告诉它你的角色、熟悉的方向、不想看什么——它会对每篇文章按你的画像评分，把值得你花时间的内容放在最前面。同样是 40 篇文章，做 Agent 工程的人和做模型微调的人看到的日报排序完全不同。
 
 默认专注于 AI 行业资讯（HuggingFace、OpenAI、Anthropic、DeepMind、HN、Reddit……），但数据源系统本身与行业无关——放一个 `sources/finance.yaml` 或 `sources/crypto.yaml` 进去，同样的评分和日报流程就能跑起来。
 
@@ -119,6 +121,24 @@ data_dir: ~/.ai-capsule/data
 ```
 
 自定义配置路径：`export AI_CAPSULE_CONFIG=/path/to/config.yaml`
+
+### 示例：LLM 应用工程师
+
+```yaml
+initialized: true
+default_identity: engineer
+default_purpose: learn
+output_language: zh
+familiar_areas:
+  - LLM 应用开发
+  - RAG
+  - Agent 框架
+  - Prompt Engineering
+dislikes: 纯营销软文、没有代码的趋势分析
+data_dir: ~/.ai-capsule/data
+```
+
+使用这份配置，RAG 检索策略或 Agent 工具调用的文章排名会高于泛泛的 AI 行业动态。一篇语音识别论文即使整体质量不错，个人匹配度评分也会很低——它不会出现在你日报的前列。
 
 ---
 
