@@ -284,3 +284,7 @@ bash $SKILL_DIR/scripts/add-source.sh --industry ai --type tavily  --name "Name"
 ```
 
 **New industry:** create `$SKILL_DIR/sources/{industry}.yaml` using `ai.yaml` as template.
+
+---
+
+Source: [github.com/WebPudge/ai-capsule](https://github.com/WebPudge/ai-capsule)
