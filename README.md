@@ -102,17 +102,15 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 
 🔗 [https://conan.sh](https://conan.sh)
 📌 **Product Hunt Daily** · engineer · learn mode · 🎯 **TRY**
-`R:9` `U:8` `N:7` `D:5` | `W:6` `P:6` `S:3` | `F:9`
+`Relevance:9` `Utility:8` `Novelty:7` `Depth:5` | `Wow:6` `Perspective:6` `Cross-domain:3`
 
-| Dim | Reason |
-|---|---|
-| **R** | A direct companion tool for Claude Code, immediately useful for engineers who use it heavily |
-| **U** | Downloadable macOS app, dmg available on GitHub Releases, usable today |
-| **N** | A visual HUD for Claude Code fills a real gap — context window monitoring solves a daily pain point |
-| **D** | Product page, clear feature descriptions but no technical implementation details |
-| **W** | Context monitoring solves a real developer pain point more elegantly than expected |
-| **P** | Visualizing runtime state as a HUD reframes the experience from "black box" to observable |
-| **S** | No cross-domain inspiration |
+- **Relevance:** A direct companion tool for Claude Code, immediately useful for engineers who use it heavily
+- **Utility:** Downloadable macOS app, dmg available on GitHub Releases, usable today
+- **Novelty:** A visual HUD for Claude Code fills a real gap — context window monitoring solves a daily pain point
+- **Depth:** Product page, clear feature descriptions but no technical implementation details
+- **Wow:** Context monitoring solves a real developer pain point more elegantly than expected
+- **Perspective:** Visualizing runtime state as a HUD reframes the experience from "black box" to observable
+- **Cross-domain:** No cross-domain inspiration
 
 **Summary:** Native macOS app that adds a real-time HUD to Claude Code — Timeline (streaming prompt/tool call view), Context window usage monitor, Pulse throughput, Skills & MCP visualizer. $29 one-time.
 **Value:** You use Claude Code heavily — Conan immediately shows how much context each conversation consumes and which tools fire how often, so you know when to /compact before the context fills up silently.
@@ -123,17 +121,15 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 
 🔗 [https://simonwillison.net/2026/Jun/13/sqlite-column-provenance/](https://simonwillison.net/2026/Jun/13/sqlite-column-provenance/)
 📌 **Simon Willison** · engineer · learn mode · 🎯 **TRY**
-`R:7` `U:8` `N:7` `D:7` | `W:5` `P:5` `S:3` | `F:8`
+`Relevance:7` `Utility:8` `Novelty:7` `Depth:7` | `Wow:5` `Perspective:5` `Cross-domain:3`
 
-| Dim | Reason |
-|---|---|
-| **R** | SQL result provenance is a real problem in RAG and Agent tool-call workflows |
-| **U** | All three approaches include code; column_provenance.py on GitHub is ready to use |
-| **N** | Bridging ctypes to sqlite3_column_table_name() is a trick most developers don't know |
-| **D** | Covers the rationale and tradeoffs of three approaches with working code |
-| **W** | The ctypes bypass of Python's stdlib has some elegance, though it's a known pattern |
-| **P** | Reveals that SQLite internally computes this via SQLITE_ENABLE_COLUMN_METADATA — a hidden capability |
-| **S** | No cross-domain perspective |
+- **Relevance:** SQL result provenance is a real problem in RAG and Agent tool-call workflows
+- **Utility:** All three approaches include code; column_provenance.py on GitHub is ready to use
+- **Novelty:** Bridging ctypes to sqlite3_column_table_name() is a trick most developers don't know
+- **Depth:** Covers the rationale and tradeoffs of three approaches with working code
+- **Wow:** The ctypes bypass of Python's stdlib has some elegance, though it's a known pattern
+- **Perspective:** Reveals that SQLite internally computes this via SQLITE_ENABLE_COLUMN_METADATA — a hidden capability
+- **Cross-domain:** No cross-domain perspective
 
 **Summary:** Simon Willison uses Claude Code to research how to map SQL query result columns back to their source table.column. Explores three approaches — apsw, ctypes bridge to SQLite C API, and EXPLAIN analysis — with code published on GitHub.
 **Value:** When your RAG Agent executes SQL and needs to explain the results, column_provenance.py lets it return "users.name from the users table" instead of a bare column name — a direct upgrade for multi-table JOIN explainability.
@@ -144,17 +140,15 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 
 🔗 [https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/](https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/)
 📌 **Simon Willison** · engineer · learn mode · 🎯 **READ**
-`R:8` `U:6` `N:6` `D:7` | `W:6` `P:8` `S:3` | `F:9`
+`Relevance:8` `Utility:6` `Novelty:6` `Depth:7` | `Wow:6` `Perspective:8` `Cross-domain:3`
 
-| Dim | Reason |
-|---|---|
-| **R** | Directly addresses AI's impact on software engineers — a core concern for engineer readers |
-| **U** | Provides the NY WARN Act data as a concrete source, and the decision/verification/understanding framework |
-| **N** | Counters the popular "threshold theory" with three specific cognitive bottlenecks |
-| **D** | Arvind Narayanan's deep analysis with academic grounding; Simon adds his own perspective |
-| **W** | No counter-intuitive finding — the three-part framework lands in expected territory |
-| **P** | "Decision-making and accountability matter more than code input speed" reframes what engineers do |
-| **S** | Pulls in labor economics data (WARN Act) to analyze a tech trend |
+- **Relevance:** Directly addresses AI's impact on software engineers — a core concern for engineer readers
+- **Utility:** Provides the NY WARN Act data as a concrete source, and the decision/verification/understanding framework
+- **Novelty:** Counters the popular "threshold theory" with three specific cognitive bottlenecks
+- **Depth:** Arvind Narayanan's deep analysis with academic grounding; Simon adds his own perspective
+- **Wow:** No counter-intuitive finding — the three-part framework lands in expected territory
+- **Perspective:** "Decision-making and accountability matter more than code input speed" reframes what engineers do
+- **Cross-domain:** Pulls in labor economics data (WARN Act) to analyze a tech trend
 
 **Summary:** Arvind Narayanan and Sayash Kappor argue that AI hasn't replaced software engineers because of three irreducible bottlenecks: decision-making and specification, verification and accountability, and deep contextual understanding. Backed by NY WARN Act filings showing zero companies attributed layoffs to AI.
 **Value:** You're an AI application engineer — this piece articulates clearly why you haven't been replaced. Decision-making and verification are exactly what you do every day; use this framework to explain AI tool boundaries to PMs, managers, or clients.

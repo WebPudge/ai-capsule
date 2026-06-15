@@ -7,17 +7,15 @@
 
 🔗 [URL](URL)
 📌 **[Source Name]** · engineer · learn mode · 🎯 **READ**
-`R:8` `U:7` `N:6` `D:8` | `W:5` `P:6` `S:4` | `F:9`
+`Relevance:8` `Utility:7` `Novelty:6` `Depth:8` | `Wow:5` `Perspective:6` `Cross-domain:4`
 
-| Dim | Reason |
-|-----|--------|
-| **R** | [tech stack / scenario match reason] |
-| **U** | [specific deliverable description] |
-| **N** | [specific technical differentiator] |
-| **D** | [information density description] |
-| **W** | [counter-intuitive or elegant aspect] |
-| **P** | [new concept / new perspective description] |
-| **S** | [cross-domain inspiration point] |
+- **Relevance:** [tech stack / scenario match reason]
+- **Utility:** [specific deliverable description]
+- **Novelty:** [specific technical differentiator]
+- **Depth:** [information density description]
+- **Wow:** [counter-intuitive or elegant aspect]
+- **Perspective:** [new concept / new perspective description]
+- **Cross-domain:** [cross-domain inspiration point]
 
 **Summary:** [article entity + core value, one sentence, no filler phrases]
 **Value:** [based on F score — F≥8: write specific intersection with your tech stack (what you can do / save / avoid); F=4-7: write indirect value; F≤3: write "A quick scan for industry context is enough"]
@@ -36,8 +34,8 @@
 
 | Element | zh (Chinese) | en (English) |
 |---------|-------------|--------------|
-| Score tags | `匹配:8` `实用:7` `新颖:6` `深度:8` \| `震撼:5` `认知:6` `跨界:4` \| `个人:9` | `R:8` `U:7` `N:6` `D:8` \| `W:5` `P:6` `S:4` \| `F:9` |
-| Reason prefixes | `> 匹配：` `> 实用：` … | `> R:` `> U:` … |
+| Score tags | `匹配:8` `实用:7` `新颖:6` `深度:8` \| `震撼:5` `认知:6` `跨界:4` | `Relevance:8` `Utility:7` `Novelty:6` `Depth:8` \| `Wow:5` `Perspective:6` `Cross-domain:4` |
+| Reason labels | `- **匹配**` `- **实用**` `- **新颖**` `- **深度**` `- **震撼**` `- **认知**` `- **跨界**` | `- **Relevance**` `- **Utility**` `- **Novelty**` `- **Depth**` `- **Wow**` `- **Perspective**` `- **Cross-domain**` |
 | Summary / Value labels | `**内容：**` `**价值：**` | `**Summary:**` `**Value:**` |
 | Mode annotation | `学习模式` `解决模式` `探索模式` | `learn` `solve` `scout` |
 | Daily report header | `AI 胶囊日报` | `AI Capsule Daily` |

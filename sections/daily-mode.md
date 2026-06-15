@@ -26,6 +26,8 @@ The output lists all non-RSS sources to fetch (includes cutoff date, URLs, and T
 
 Skip a source on failure — do not block on it. **Use dates in article titles, body text, or page ordering to determine whether an article falls within the cutoff date; skip old articles immediately.**
 
+**Do NOT pre-filter by topic or relevance.** Add all items from each source that pass the date cutoff — even if they seem unrelated to AI. The scoring system handles ranking. Every item from Product Hunt, GitHub Trending, etc. goes into pending regardless of whether it looks relevant.
+
 **Step 3: Merge + dedup + produce the scoring list**
 
 Use Bash to filter uniformly and output the list of titles that actually need scoring:
