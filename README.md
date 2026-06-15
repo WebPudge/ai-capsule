@@ -104,7 +104,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 📌 **Product Hunt Daily** · engineer · learn mode · 🎯 **TRY**
 `R:9` `U:8` `N:7` `D:5` | `W:6` `P:6` `S:3` | `F:9`
 
-| Dim | |
+| Dim | Reason |
 |---|---|
 | **R** | A direct companion tool for Claude Code, immediately useful for engineers who use it heavily |
 | **U** | Downloadable macOS app, dmg available on GitHub Releases, usable today |
@@ -125,7 +125,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 📌 **Simon Willison** · engineer · learn mode · 🎯 **TRY**
 `R:7` `U:8` `N:7` `D:7` | `W:5` `P:5` `S:3` | `F:8`
 
-| Dim | |
+| Dim | Reason |
 |---|---|
 | **R** | SQL result provenance is a real problem in RAG and Agent tool-call workflows |
 | **U** | All three approaches include code; column_provenance.py on GitHub is ready to use |
@@ -146,7 +146,7 @@ Real output from a June 2026 digest — engineer profile, familiar with LLM app 
 📌 **Simon Willison** · engineer · learn mode · 🎯 **READ**
 `R:8` `U:6` `N:6` `D:7` | `W:6` `P:8` `S:3` | `F:9`
 
-| Dim | |
+| Dim | Reason |
 |---|---|
 | **R** | Directly addresses AI's impact on software engineers — a core concern for engineer readers |
 | **U** | Provides the NY WARN Act data as a concrete source, and the decision/verification/understanding framework |
