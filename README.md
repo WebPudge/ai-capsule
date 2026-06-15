@@ -87,22 +87,60 @@ Say any of these to Claude:
 
 ---
 
-## Daily digest format
+## Daily digest example
+
+Real output from a June 2026 digest (engineer profile, familiar with LLM apps / RAG / Agent frameworks):
 
 ```
-### #1 ★★★★☆ 7.4/10 · [Article Title]
+### #1 ★★★★★ 8.4/10 · Evoflux: Inference-Time Evolution of Executable Tool Workflows for Complex Reasoning
 
-🔗 https://...
-📌 Simon Willison · engineer · learn mode · 🎯 TRY
-`R:9` `U:8` `N:7` `D:7` | `W:5` `P:6` `S:4` | `F:9`
+🔗 https://arxiv.org/abs/2606.12674
+📌 HuggingFace Papers · engineer · learn mode · 🎯 READ
+`R:9` `U:7` `N:9` `D:8` | `W:8` `P:8` `S:6` | `F:10`
 
-> R: Directly relevant to RAG pipeline work
-> U: GitHub repo with runnable examples included
+> R: Inference-time adaptive tool workflows are directly relevant to Agent frameworks
+> U: Provides new design patterns for automatic workflow optimization, with paper code
+> N: Dynamically evolving workflows at inference time is a paradigm shift from static tool calls
+> D: arxiv paper with full methodology and experimental results
+> W: The idea of letting LLMs self-optimize their call flow at inference time is elegantly counter-intuitive
+> P: Introduces "workflow-as-search-space" — a new way to think about tool use design
+> S: Evolutionary algorithm concepts applied to LLM tool calling
+
+**Summary:** Method for dynamically evolving executable tool workflows at inference time, letting LLMs automatically optimize tool call sequences for complex reasoning tasks.
+**Value:** New direction for your Agent workflow design — shift from statically defined flows to inference-time self-evolution. The paper architecture is a concrete reference for retrofitting your existing tool use system.
+
+---
+
+### #2 ★★★★☆ 7.8/10 · Initial impressions of Claude Fable 5
+
+🔗 https://simonwillison.net/2026/Jun/9/claude-fable-5/
+📌 Simon Willison · engineer · learn mode · 🎯 READ
+`R:9` `U:8` `N:8` `D:7` | `W:7` `P:7` `S:4` | `F:10`
+
+> R: Claude Fable 5 directly affects engineers building on the Claude API
+> U: Concrete capability test cases to decide whether to migrate and what to watch out for
 ...
 
-**Summary:** ...
-**Value:** You're building RAG — this implementation can replace your custom chunker in an afternoon.
+**Summary:** Simon Willison's first-hand evaluation of Claude Fable 5 — capability benchmarks, new behavior patterns, differences from the previous generation.
+**Value:** You're building on the Claude API — Fable 5 behavior changes affect you directly. Read this to decide whether to upgrade now and whether you need a compatibility shim.
+
+---
+
+### #3 ★★★★☆ 7.8/10 · Respan Gateway
+
+🔗 https://respan.ai
+📌 Product Hunt Daily · engineer · learn mode · 🎯 TRY
+`R:9` `U:9` `N:7` `D:5` | `W:6` `P:6` `S:4` | `F:10`
+
+> R: LLM gateway tooling directly applies to production LLM app engineering
+> U: Two-line integration, built-in monitoring and evals — immediately usable
+...
+
+**Summary:** Two-line LLM gateway with built-in monitoring and evaluation. #3 on Product Hunt (422 votes).
+**Value:** Worth a direct trial to see if it can replace your hand-rolled LLM routing and monitoring layer, saving production infrastructure time.
 ```
+
+The same 40 articles ranked for a fine-tuning researcher would look completely different — the Agent workflow paper above would rank lower, and model architecture papers would float to the top.
 
 ---
 
