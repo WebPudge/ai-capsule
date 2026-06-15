@@ -48,13 +48,18 @@
 
 ### Claude Code
 
-```bash
-git clone https://github.com/WebPudge/ai-capsule ~/.claude/skills/ai-capsule
-cd ~/.claude/skills/ai-capsule
-bash scripts/setup-env.sh
+```
+/plugin marketplace add WebPudge/ai-capsule
+/plugin install ai-capsule@ai-capsule
 ```
 
-然后打开 Claude Code，说 `daily`。
+然后初始化 Python 环境：
+
+```bash
+bash ~/.claude/plugins/ai-capsule/scripts/setup-env.sh
+```
+
+然后说 `daily`。
 
 ### OpenClaw
 

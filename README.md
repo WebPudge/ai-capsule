@@ -50,13 +50,18 @@ Action tags tell you what to do with each card:
 
 ### Claude Code
 
-```bash
-git clone https://github.com/WebPudge/ai-capsule ~/.claude/skills/ai-capsule
-cd ~/.claude/skills/ai-capsule
-bash scripts/setup-env.sh
+```
+/plugin marketplace add WebPudge/ai-capsule
+/plugin install ai-capsule@ai-capsule
 ```
 
-Then start Claude Code and say `daily`.
+Then run the environment setup:
+
+```bash
+bash ~/.claude/plugins/ai-capsule/scripts/setup-env.sh
+```
+
+Then say `daily`.
 
 ### OpenClaw
 

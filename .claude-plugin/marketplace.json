@@ -1,0 +1,24 @@
+{
+  "name": "ai-capsule",
+  "owner": {
+    "name": "WebPudge",
+    "email": "1007952005@qq.com"
+  },
+  "metadata": {
+    "description": "AI Capsule — personal AI news digest skill",
+    "version": "1.0.0",
+    "homepage": "https://github.com/WebPudge/ai-capsule"
+  },
+  "plugins": [
+    {
+      "name": "ai-capsule",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/WebPudge/ai-capsule.git"
+      },
+      "version": "1.0.0",
+      "description": "Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order.",
+      "strict": true
+    }
+  ]
+}
