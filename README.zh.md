@@ -39,7 +39,7 @@
 
 ## 环境要求
 
-- [Claude Code](https://claude.ai/code)（或其他 Claude agent 运行时）
+- [Claude Code](https://claude.ai/code) 或 [OpenClaw](https://openclaw.ai)
 - Python 3.9+
 
 ---

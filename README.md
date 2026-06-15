@@ -41,7 +41,7 @@ Action tags tell you what to do with each card:
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/code) (or any Claude agent runtime)
+- [Claude Code](https://claude.ai/code) or [OpenClaw](https://openclaw.ai)
 - Python 3.9+
 
 ---
