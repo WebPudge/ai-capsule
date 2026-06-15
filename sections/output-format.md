@@ -9,13 +9,15 @@
 📌 **[Source Name]** · engineer · learn mode · 🎯 **READ**
 `R:8` `U:7` `N:6` `D:8` | `W:5` `P:6` `S:4` | `F:9`
 
-> R: [tech stack / scenario match reason]
-> U: [specific deliverable description]
-> N: [specific technical differentiator]
-> D: [information density description]
-> W: [counter-intuitive or elegant aspect]
-> P: [new concept / new perspective description]
-> S: [cross-domain inspiration point]
+| Dim | Reason |
+|-----|--------|
+| **R** | [tech stack / scenario match reason] |
+| **U** | [specific deliverable description] |
+| **N** | [specific technical differentiator] |
+| **D** | [information density description] |
+| **W** | [counter-intuitive or elegant aspect] |
+| **P** | [new concept / new perspective description] |
+| **S** | [cross-domain inspiration point] |
 
 **Summary:** [article entity + core value, one sentence, no filler phrases]
 **Value:** [based on F score — F≥8: write specific intersection with your tech stack (what you can do / save / avoid); F=4-7: write indirect value; F≤3: write "A quick scan for industry context is enough"]
