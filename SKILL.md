@@ -1,14 +1,16 @@
 ---
 name: ai-capsule
-description: Personal AI news digest — scores and ranks daily AI articles by your tech stack
+description: Ranks your daily AI news feed by personal relevance — scores every article and surfaces the most useful ones first.
 version: 1.0.0
-author: WebPudge
 license: MIT
-requires:
-  python: ">=3.9"
-compatibility:
-  - claude-code
-  - openclaw
+emoji: "📰"
+homepage: https://github.com/WebPudge/ai-capsule
+metadata:
+  openclaw:
+    requires:
+      bins:
+        - python3
+        - bash
 ---
 
 # AI Capsule — Personal AI News Value Evaluator
