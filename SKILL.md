@@ -15,7 +15,7 @@ metadata:
 
 # AI Capsule — Personal AI News Value Evaluator
 
-Pull from 16 AI news sources daily (HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more), score every article across 7 dimensions, and rank the digest by how relevant each article is to *your* background. Nothing is filtered out — everything is ranked so the articles most useful to you appear first.
+Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order. Sources include HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more (16 total).
 
 **Trigger words:** say `daily`, `daily mode`, or `每日模式` to run the full digest. Paste a URL or article text to score a single article.
 

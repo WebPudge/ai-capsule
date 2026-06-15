@@ -1,0 +1,13 @@
+{
+  "name": "ai-capsule",
+  "description": "Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order.",
+  "version": "1.0.0",
+  "author": {
+    "name": "WebPudge",
+    "email": "1007952005@qq.com"
+  },
+  "homepage": "https://github.com/WebPudge/ai-capsule",
+  "repository": "https://github.com/WebPudge/ai-capsule",
+  "license": "MIT",
+  "keywords": ["ai", "news", "digest", "daily", "rss", "scoring", "rag", "llm"]
+}
