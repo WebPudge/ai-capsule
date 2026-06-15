@@ -1,0 +1,10 @@
+# User data — stored in ~/.ai-capsule/, not in the repo
+data/
+config.yaml
+
+# Python venv (created by setup.sh)
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
