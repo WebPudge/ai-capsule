@@ -10,19 +10,26 @@ The script reads all `type: rss` sources from `$SKILL_DIR/sources/ai.yaml` and o
 
 **Step 2: Supplemental fetch (non-RSS sources)**
 
-First run the following to get the full fetch task list for the current industry:
+`fetch.py` (Step 1) now also pre-fetches the 9 `type: webfetch` sources marked `python_fetch: true` (all except Product Hunt) using Scrapling + trafilatura. These items are already in `pending.json` with a `content` field (up to 1000 Unicode chars of extracted body text).
+
+**You only need WebFetch for two cases:**
+1. **Product Hunt Daily** (`python_fetch: false` — Cloudflare blocks Python fetchers; Anthropic proxy IP is whitelisted)
+2. **Any item already in pending.json where `content` is empty** — fallback for sources that Scrapling couldn't extract
+
+First run the following to get the remaining sources to fetch:
 
 ```bash
 "$SKILL_DIR/.venv/bin/python" "$SKILL_DIR/sources_extract.py" --for-claude --industry ai
 ```
 
-The output lists all non-RSS sources to fetch (includes cutoff date, URLs, and Tavily query parameters). For each source, **fetch the URL and extract article titles + URLs + summaries** using whichever tool your runtime provides:
+The output lists all non-RSS sources. For `type: tavily` sources (Reddit LocalLLaMA) use Tavily search. For Product Hunt use WebFetch. Skip other webfetch sources — they were already handled by fetch.py.
 
-| Runtime | Tool |
-|---------|------|
-| Claude Code | `WebFetch` |
-| Codex / shell agents | `Bash: curl <url>` then parse with python |
-| Tavily-enabled agents | `tavily_extract` for pages, `tavily_search` for query-based sources |
+| Source type | Fetched by | Notes |
+|-------------|-----------|-------|
+| `type: rss` | fetch.py (Step 1) | Done |
+| `type: webfetch`, `python_fetch: true` | fetch.py (Step 1) | Done, `content` field populated |
+| `type: webfetch`, `python_fetch: false` (Product Hunt) | Claude `WebFetch` | Cloudflare — must use WebFetch |
+| `type: tavily` | Claude Tavily search | Reddit etc. |
 
 Skip a source on failure — do not block on it. **Use dates in article titles, body text, or page ordering to determine whether an article falls within the cutoff date; skip old articles immediately.**
 

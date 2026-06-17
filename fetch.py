@@ -13,10 +13,14 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import feedparser
 import requests
+import trafilatura
 import yaml
 from bs4 import BeautifulSoup
+from scrapling.fetchers import Fetcher as ScraplingFetcher
 
 SKILL_DIR = Path(__file__).parent
 SOURCES_DIR = SKILL_DIR / "sources"
@@ -98,6 +102,7 @@ def parse_rss(url: str) -> list[dict]:
                 "title": e.get("title", "").strip(),
                 "url": e.get("link", ""),
                 "summary": e.get("summary", e.get("description", ""))[:300],
+                "content": "",
                 "published_at": pub.isoformat() if pub else None,
             })
         return items
@@ -157,12 +162,13 @@ def fetch_huggingface() -> list[dict]:
             except Exception:
                 pass
         pid = p.get("id", "")
-        abstract = p.get("abstract", "")[:300]
+        abstract = (p.get("summary") or p.get("abstract") or p.get("ai_summary") or "")[:1000]
         url = f"https://arxiv.org/abs/{pid}" if pid else ""
         items.append({
             "title": title,
             "url": url,
-            "summary": abstract,
+            "summary": abstract[:300],
+            "content": abstract,
             "source": "HuggingFace 论文",
             "published_at": pub_str,
         })
@@ -220,97 +226,38 @@ def fetch_webpage_articles(url: str, source_name: str, limit: int = 5) -> list[d
     return items
 
 
-def fetch_anthropic_engineering() -> list[dict]:
-    print("  Anthropic 工程博客...")
-    html = fetch_url("https://www.anthropic.com/engineering")
-    if not html:
-        return []
-    soup = BeautifulSoup(html, "html.parser")
-    items = []
-    seen = set()
-    for a in soup.find_all("a", href=True):
-        title = a.get_text(strip=True)
-        href = a["href"]
-        if len(title) < 15 or len(title) > 200:
-            continue
-        if "/engineering/" not in href:
-            continue
-        if title in seen:
-            continue
-        seen.add(title)
-        full_url = f"https://www.anthropic.com{href}" if href.startswith("/") else href
-        items.append({
-            "title": title,
-            "url": full_url,
-            "summary": "",
-            "source": "Anthropic 工程博客",
-        })
-        if len(items) >= 5:
-            break
-    return items
+def enrich_items_with_content(items: list[dict], max_workers: int = 6) -> list[dict]:
+    """
+    对 content 字段为空的条目并发抓取文章正文。
+    已有 content（如 HuggingFace abstract）的条目直接跳过。
+    失败时保留原条目（content 保持空字符串，由 Claude WebFetch 兜底）。
+    """
+    to_enrich = [i for i in items if not i.get("content", "").strip() and i.get("url")]
+    if not to_enrich:
+        return items
 
+    print(f"  正文抓取: {len(to_enrich)} 篇...")
 
-def fetch_claude_blog() -> list[dict]:
-    print("  Anthropic 产品博客 (claude.com/blog)...")
-    html = fetch_url("https://claude.com/blog")
-    if not html:
-        return []
-    soup = BeautifulSoup(html, "html.parser")
-    items = []
-    seen = set()
-    for a in soup.find_all("a", href=True):
-        title = a.get_text(strip=True)
-        href = a["href"]
-        if len(title) < 15 or len(title) > 200:
-            continue
-        if "/blog/" not in href:
-            continue
-        if title in seen:
-            continue
-        seen.add(title)
-        full_url = f"https://claude.com{href}" if href.startswith("/") else href
-        items.append({
-            "title": title,
-            "url": full_url,
-            "summary": "",
-            "source": "Anthropic 产品博客",
-        })
-        if len(items) >= 10:
-            break
-    return items
+    def fetch_article(item: dict) -> dict:
+        try:
+            resp = _scrapling_fetcher.get(item["url"], timeout=12)
+            html = resp.html_content or ""
+            if html and len(html) > 500:
+                text = trafilatura.extract(html) or ""
+                if text:
+                    item["content"] = text[:1000]
+        except Exception:
+            pass
+        return item
 
+    enriched_map = {}
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = {pool.submit(fetch_article, i): i["url"] for i in to_enrich}
+        for fut in as_completed(futures):
+            result = fut.result()
+            enriched_map[result["url"]] = result
 
-def fetch_producthunt_daily() -> list[dict]:
-    """抓取 Product Hunt 昨日榜"""
-    yesterday = datetime.now() - timedelta(days=1)
-    url = f"https://www.producthunt.com/leaderboard/daily/{yesterday.year}/{yesterday.month}/{yesterday.day}"
-    print(f"  Product Hunt 日榜 ({yesterday.strftime('%Y-%m-%d')})...")
-    html = fetch_url(url)
-    if not html:
-        return []
-    soup = BeautifulSoup(html, "html.parser")
-    items = []
-    seen = set()
-    for a in soup.find_all("a", href=True):
-        title = a.get_text(strip=True)
-        href = a["href"]
-        if len(title) < 5 or len(title) > 100:
-            continue
-        if "/products/" not in href and "/posts/" not in href:
-            continue
-        if title in seen:
-            continue
-        seen.add(title)
-        full_url = f"https://www.producthunt.com{href}" if href.startswith("/") else href
-        items.append({
-            "title": title,
-            "url": full_url,
-            "summary": "",
-            "source": "Product Hunt 日榜",
-        })
-        if len(items) >= 10:
-            break
-    return items
+    return [enriched_map.get(i["url"], i) if not i.get("content", "").strip() else i for i in items]
 
 
 def fetch_hacker_news() -> list[dict]:
@@ -321,33 +268,110 @@ def fetch_hacker_news() -> list[dict]:
     return items[:5]
 
 
-def fetch_reddit_localllama() -> list[dict]:
-    """Reddit 直接访问不稳定，通过 old.reddit.com RSS 尝试"""
-    print("  Reddit r/LocalLLaMA (RSS)...")
+# ── webfetch 来源抓取 ─────────────────────────────────────────────────────────
+
+_scrapling_fetcher = ScraplingFetcher()
+
+
+def _fetch_one_webfetch(source: dict) -> Optional[list[dict]]:
+    """
+    用 Scrapling HTTP-only + BeautifulSoup + trafilatura 抓取单个 webfetch 源。
+    返回 item 列表（含 content 字段），失败返回 None（由调用方跳过）。
+    sources/ai.yaml 里可设 link_pattern（正则）来过滤只保留文章链接。
+    """
+    name = source["name"]
+    url = source["url"]
+    limit = source.get("limit", 5)
+    link_pattern = source.get("link_pattern")
+    compiled_pattern = re.compile(link_pattern) if link_pattern else None
+
+    print(f"  {name} (Python fetch)...")
     try:
-        url = "https://old.reddit.com/r/LocalLLaMA/hot.rss?limit=10"
-        r = requests.get(
-            url,
-            headers={**HEADERS, "User-Agent": "ai-capsule:v1.0"},
-            timeout=20
-        )
-        if r.status_code == 200:
-            feed = feedparser.parse(r.text)
-            items = []
-            for e in feed.entries[:5]:
-                title = e.get("title", "").strip()
-                if not title or title.startswith("Comment"):
-                    continue
-                items.append({
-                    "title": title,
-                    "url": e.get("link", ""),
-                    "summary": BeautifulSoup(e.get("summary", ""), "html.parser").get_text()[:200],
-                    "source": "Reddit LocalLLaMA",
-                })
-            return items
+        resp = _scrapling_fetcher.get(url, timeout=12)
+        html = resp.html_content or ""
     except Exception as e:
-        print(f"  [WARN] Reddit RSS failed: {e} — 请在 Claude 评分时用 Tavily 补充", file=sys.stderr)
-    return []
+        print(f"  [WARN] {name}: Scrapling 失败 — {e}", file=sys.stderr)
+        return None
+
+    if not html or len(html) < 500:
+        print(f"  [WARN] {name}: HTML 太短 ({len(html)} 字符)，跳过", file=sys.stderr)
+        return None
+
+    # 用 trafilatura 提取正文作为 content
+    content_raw = trafilatura.extract(html) or ""
+    content = content_raw[:1000]
+
+    # 用 BeautifulSoup 提取文章链接列表（title + url）
+    soup = BeautifulSoup(html, "html.parser")
+    base = "/".join(url.rstrip("/").split("/")[:3])
+    items = []
+    seen = set()
+    for a in soup.find_all("a", href=True):
+        title = a.get_text(strip=True)
+        href = a["href"]
+        if len(title) < 15 or len(title) > 200:
+            continue
+        if any(skip in href for skip in ["#", "mailto:", "twitter", "javascript"]):
+            continue
+        if title in seen:
+            continue
+        if href.startswith("/"):
+            href = base + href
+        elif not href.startswith("http"):
+            continue
+        # 有 link_pattern 时只保留匹配的链接
+        if compiled_pattern and not compiled_pattern.search(href):
+            continue
+        # title 太短时从 URL 路径末段提取备用标题
+        if len(title) < 15:
+            slug = href.rstrip("/").split("/")[-1]
+            title = slug.replace("-", " ").replace("_", " ").strip()
+            if len(title) < 5:
+                continue
+        seen.add(title)
+        items.append({
+            "title": title,
+            "url": href,
+            "summary": "",
+            "content": content,
+            "source": name,
+        })
+        if len(items) >= limit:
+            break
+
+    if not items:
+        print(f"  [WARN] {name}: 未提取到任何文章链接", file=sys.stderr)
+        return None
+
+    print(f"  → {name}: {len(items)} 条，content {len(content)} 字符")
+    return items
+
+
+def load_webfetch_sources(industry: str = "ai") -> list[dict]:
+    """从 sources/{industry}.yaml 加载 type=webfetch 且 python_fetch != false 的来源"""
+    path = SOURCES_DIR / f"{industry}.yaml"
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    return [
+        s for s in (data.get("sources") or [])
+        if s.get("type") == "webfetch" and s.get("python_fetch", True)
+    ]
+
+
+def fetch_webfetch_sources(sources: list[dict]) -> list[dict]:
+    """并发抓取所有 webfetch 来源，返回合并的 item 列表。sources 为空返回 []。"""
+    if not sources:
+        return []
+    all_items: list[dict] = []
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {pool.submit(_fetch_one_webfetch, s): s["name"] for s in sources}
+        for fut in as_completed(futures):
+            result = fut.result()
+            if result:
+                all_items.extend(result)
+    return all_items
 
 
 # ── 主流程 ────────────────────────────────────────────────────────────────────
@@ -397,6 +421,7 @@ def main(industry: str = "ai"):
     all_items = []
     failed = []
 
+    # ── RSS 来源（串行）
     for name, fn in load_rss_sources(industry):
         try:
             items = fn()
@@ -407,6 +432,18 @@ def main(industry: str = "ai"):
             failed.append(name)
             print(f"  [ERROR] {name}: {e}", file=sys.stderr)
         time.sleep(0.3)
+
+    # ── RSS 条目正文补充（对 content 为空的条目抓取文章正文）
+    all_items = enrich_items_with_content(all_items)
+
+    # ── webfetch 来源（并发，python_fetch: false 的源跳过）
+    webfetch_sources = load_webfetch_sources(industry)
+    if webfetch_sources:
+        print(f"\n抓取 {len(webfetch_sources)} 个 webfetch 来源（并发）...")
+        wf_items = fetch_webfetch_sources(webfetch_sources)
+        new_wf = [i for i in wf_items if i.get("title") and not is_duplicate(i["title"], dedup)]
+        print(f"  → webfetch 合计: {len(wf_items)} 条，新增 {len(new_wf)} 条")
+        all_items.extend(new_wf)
 
     # 去掉标题重复（跨来源）
     seen_titles = set()
