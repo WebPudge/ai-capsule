@@ -29,11 +29,16 @@ The output lists all non-RSS sources. For `type: tavily` sources (Reddit LocalLL
 | `type: rss` | fetch.py (Step 1) | Done |
 | `type: webfetch`, `python_fetch: true` | fetch.py (Step 1) | Done, `content` field populated |
 | `type: webfetch`, `python_fetch: false` (Product Hunt) | Claude `WebFetch` | Cloudflare — must use WebFetch |
+| `type: twitter` | fetch.py (Step 1) | Reads x.com cookies from local Chrome, auto-detects proxy |
 | `type: tavily` | Claude Tavily search | Reddit etc. |
 
 Skip a source on failure — do not block on it. **Use dates in article titles, body text, or page ordering to determine whether an article falls within the cutoff date; skip old articles immediately.**
 
 **Do NOT pre-filter by topic or relevance.** Add all items from each source that pass the date cutoff — even if they seem unrelated to AI. The scoring system handles ranking. Every item from Product Hunt, GitHub Trending, etc. goes into pending regardless of whether it looks relevant.
+
+**X/Twitter source (`type: twitter`):** Already handled by fetch.py (Step 1). The script extracts x.com cookies from local Chrome via `browser_cookie3` and calls `twitter-cli` for each account in `sources/ai.yaml`. Items appear in pending.json with content already populated. No additional action needed in this step.
+
+> **Privacy:** `browser_cookie3` reads Chrome's local SQLite cookie database on your machine. Only cookies for the `x.com` domain are extracted. These cookies are passed to `twitter-cli` as environment variables in memory only — they are never written to disk or uploaded anywhere. See README.md for details.
 
 **Step 3: Merge + dedup + produce the scoring list**
 

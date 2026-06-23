@@ -208,7 +208,26 @@ With this config, articles about RAG retrieval strategies or Agent tool-calling 
 
 **URL fetch:** Anthropic (3 feeds) · Google DeepMind · Meta AI · Simon Willison · Eugene Yan · Chip Huyen · Product Hunt Daily · GitHub Trending
 
+**X/Twitter:** @Zai_org · @dotey · @_akhaliq · @omarsar0 · @karpathy (latest 5 posts each)
+
 **Search:** Reddit LocalLLaMA
+
+## Proxy configuration for X/Twitter
+
+If you cannot access X/Twitter directly from your network, the `twitter-cli` tool uses `curl-cffi` which does not read system proxy settings automatically. Set the `https_proxy` environment variable:
+
+```bash
+export https_proxy=http://127.0.0.1:7890
+```
+
+Or add it to your shell profile (`~/.zshrc` / `~/.bashrc`):
+
+```bash
+export https_proxy=http://127.0.0.1:7890
+export http_proxy=http://127.0.0.1:7890
+```
+
+`fetch.py` auto-detects `https_proxy` / `HTTPS_PROXY` and forwards it to the `twitter-cli` subprocess. If neither env var is set, it will also try common local proxy ports (ClashX 7890, Surge 6152, etc.) automatically.
 
 ### Extend to other industries
 
@@ -226,13 +245,14 @@ cp sources/ai.yaml sources/finance.yaml
 # say "daily --industry finance" to Claude
 ```
 
-Three source types are supported in any industry:
+Four source types are supported in any industry:
 
 | Type | Fetched by | Use for |
 |------|-----------|---------|
 | `rss` | `fetch.py` automatically | RSS/Atom feeds, APIs |
 | `webfetch` | Agent at runtime | Blogs, leaderboards, pages without RSS |
 | `tavily` | Agent at runtime | Reddit, forums, search-based discovery |
+| `twitter` | `fetch.py` automatically | X/Twitter account timeline — uses twitter-cli + browser-cookie3 |
 
 ---
 
@@ -278,6 +298,12 @@ data/
 ```
 
 ---
+
+## Privacy
+
+**X/Twitter source:** When you add an X/Twitter data source, the daily fetch uses `browser-cookie3` to read Chrome's local SQLite cookie file on your machine. Only cookies for the `x.com` domain are extracted. These cookies are passed to `twitter-cli` as environment variables in memory — they are never written to disk, uploaded, or shared. If the cookies expire, the daily report will prompt you to re-login at x.com.
+
+All other data sources fetch public content via RSS, HTTP requests, or search APIs. Your config and scored history are stored locally in `~/.ai-capsule/`.
 
 ## License
 

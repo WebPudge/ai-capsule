@@ -206,6 +206,8 @@ data_dir: ~/.ai-capsule/data
 
 **URL 抓取：** Anthropic（3 个 feed）· Google DeepMind · Meta AI · Simon Willison · Eugene Yan · Chip Huyen · Product Hunt 日榜 · GitHub Trending
 
+**X/Twitter：** @Zai_org · @dotey · @_akhaliq · @omarsar0 · @karpathy（各最新 5 条推文）
+
 **搜索：** Reddit LocalLLaMA
 
 ### 扩展到其他行业
@@ -224,13 +226,31 @@ cp sources/ai.yaml sources/finance.yaml
 # 对 Claude 说 "daily --industry finance"
 ```
 
-三种来源类型在任意行业都通用：
+## X/Twitter 代理配置
+
+如果你的网络无法直接访问 X/Twitter，twitter-cli 底层的 HTTP 库（curl-cffi）不会自动读取系统代理设置。可以配置代理地址：
+
+```bash
+export https_proxy=http://127.0.0.1:7890
+```
+
+或者写入 shell 配置文件（`~/.zshrc` / `~/.bashrc`）中：
+
+```bash
+export https_proxy=http://127.0.0.1:7890
+export http_proxy=http://127.0.0.1:7890
+```
+
+`fetch.py` 会自动检测 `https_proxy` / `HTTPS_PROXY` 环境变量；如未设置，会尝试自动探测本地常见的代理端口（ClashX 7890、Surge 6152 等）。
+
+四种来源类型在任意行业都通用：
 
 | 类型 | 由谁抓取 | 适用场景 |
 |------|---------|---------|
 | `rss` | `fetch.py` 自动 | RSS/Atom feed、API |
 | `webfetch` | Agent 运行时 | 无 RSS 的博客、榜单、页面 |
 | `tavily` | Agent 运行时 | Reddit、论坛、基于搜索的发现 |
+| `twitter` | `fetch.py` 自动 | X/Twitter 账号时间线——通过 fetch.py 脚本调用 twitter-cli + browser-cookie3 |
 
 ---
 
@@ -276,6 +296,12 @@ data/
 ```
 
 ---
+
+## 隐私声明
+
+**X/Twitter 数据源：** 使用 X/Twitter 数据源时，`fetch.py` 会通过 `browser-cookie3` 读取本机 Chrome 浏览器 Cookie 数据库。仅读取 `x.com` 域名的 Cookie，这些 Cookie 以环境变量形式传递给 `twitter-cli`（仅存于进程内存），不会写入磁盘、上传或分享。如果 Cookie 过期，日报末尾会提示重新登录 x.com。
+
+其他所有数据源通过 RSS、HTTP 请求或搜索 API 抓取公开内容。你的配置和评分历史存储在本地 `~/.ai-capsule/`。
 
 ## License
 

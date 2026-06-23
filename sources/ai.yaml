@@ -2,6 +2,7 @@
 # type: rss      → fetched automatically by fetch.py
 # type: webfetch → agent fetches in daily Step 2 (WebFetch / curl / tavily_extract)
 # type: tavily   → agent searches in daily Step 2
+# type: twitter  → fetched automatically by fetch.py (twitter-cli + browser-cookie3)
 
 sources:
   # ── RSS / API (auto-fetched by fetch.py) ─────────────────────────────────
@@ -98,6 +99,23 @@ sources:
     limit: 5
     note: keep only AI/LLM/ML projects, max 5; set source field to "github"
     python_fetch: false
+
+  # ── Twitter/X (agent fetches in daily Step 2) ──────────────────────────────
+  # Requires: pip3 install browser-cookie3 twitter-cli
+  # Privacy: browser-cookie3 reads Chrome's local SQLite cookie file.
+  #          Only x.com cookies are extracted. Cookies never leave the machine.
+  #          If cookies expire, agent will prompt user to re-login at x.com.
+
+  - name: X/Twitter
+    type: twitter
+    accounts:
+      - Zai_org
+      - dotey
+      - _akhaliq
+      - omarsar0
+      - karpathy
+    limit: 5
+    note: latest 5 posts per account; user can add/remove accounts in this list
 
   # ── Tavily search (agent searches in daily Step 2) ────────────────────────
 

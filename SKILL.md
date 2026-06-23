@@ -1,7 +1,7 @@
 ---
 name: ai-capsule
 description: Ranks your daily AI news feed by personal relevance — scores every article and surfaces the most useful ones first.
-version: 1.0.2
+version: 1.0.4
 license: MIT
 emoji: "📰"
 homepage: https://github.com/WebPudge/ai-capsule
@@ -15,7 +15,7 @@ metadata:
 
 # AI Capsule — Personal AI News Value Evaluator
 
-Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order. Sources include HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more (16 total).
+Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order. Sources include HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more (17 total), plus X/Twitter accounts.
 
 **Trigger words:** say `daily`, `daily mode`, or `每日模式` to run the full digest. Paste a URL or article text to score a single article.
 
@@ -255,6 +255,7 @@ Source configs: `$SKILL_DIR/sources/{industry}.yaml`
 bash $SKILL_DIR/scripts/add-source.sh --industry ai --type rss     --name "Name" --url https://example.com/feed
 bash $SKILL_DIR/scripts/add-source.sh --industry ai --type webfetch --name "Name" --url https://example.com --note "hint"
 bash $SKILL_DIR/scripts/add-source.sh --industry ai --type tavily  --name "Name" --query "search terms" --domains "reddit.com"
+bash $SKILL_DIR/scripts/add-source.sh --industry ai --type twitter --name "Name" --accounts "handle1,handle2"
 ```
 
 **Source schema:**
@@ -280,6 +281,14 @@ bash $SKILL_DIR/scripts/add-source.sh --industry ai --type tavily  --name "Name"
   include_domains:
     - reddit.com
   time_range: day         # day | week | month
+  limit: 5
+
+# X/Twitter — fetched automatically by fetch.py (requires Chrome login)
+- name: X/Twitter
+  type: twitter
+  accounts:
+    - handle1
+    - handle2
   limit: 5
 ```
 

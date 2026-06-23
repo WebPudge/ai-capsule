@@ -67,6 +67,7 @@ def to_claude_instructions(sources: list[dict], cutoff_days: int = 3) -> str:
 
     webfetch = [s for s in sources if s.get("type") == "webfetch"]
     tavily = [s for s in sources if s.get("type") == "tavily"]
+    twitter = [s for s in sources if s.get("type") == "twitter"]
 
     if webfetch:
         lines.append("## URL fetch sources (fetch each, skip on failure)")
@@ -95,13 +96,23 @@ def to_claude_instructions(sources: list[dict], cutoff_days: int = 3) -> str:
                 f"limit={s.get('limit',5)}"
             )
 
+    if twitter:
+        lines.append("")
+        lines.append("## X/Twitter sources (already handled by fetch.py)")
+        lines.append("")
+        lines.append("These are pre-fetched by fetch.py (Step 1). No action needed here.")
+        for i, s in enumerate(twitter, 1):
+            accounts = ", ".join(f"@{a}" for a in s.get("accounts", []))
+            limit = s.get("limit", 5)
+            lines.append(f"{i}. **{s['name']}** → accounts: {accounts}, limit: {limit}")
+
     return "\n".join(lines)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Data source extraction tool")
     parser.add_argument("--industry", default="ai", help="Industry name (maps to sources/{industry}.yaml)")
-    parser.add_argument("--type", dest="type_", choices=["rss", "webfetch", "tavily"], help="Filter by source type")
+    parser.add_argument("--type", dest="type_", choices=["rss", "webfetch", "tavily", "twitter"], help="Filter by source type")
     parser.add_argument("--list", action="store_true", help="List all available industries")
     parser.add_argument("--markdown", action="store_true", help="Output as Markdown table")
     parser.add_argument("--for-claude", action="store_true", help="Output fetch task list for the agent")
