@@ -53,18 +53,24 @@ git push origin main
 echo "✅ GitHub 推送完成"
 
 # ── Publish to ClawHub ──
-# .claude-plugin 会导致 clawhub 误判为 plugin，临时移开
+# .claude-plugin（目录）会导致 clawhub 误判为 plugin，临时移开
+# 用 -e 匹配目录和文件；用 trap 保证无论 publish 成败都恢复，避免目录被丢在 /tmp
 CLAUDE_PLUGIN_BAK=""
-if [ -f .claude-plugin ]; then
-  CLAUDE_PLUGIN_BAK=$(mktemp /tmp/ai-capsule-claude-plugin.XXXXXX)
+restore_plugin() {
+  if [ -n "$CLAUDE_PLUGIN_BAK" ]; then
+    mv "$CLAUDE_PLUGIN_BAK" .claude-plugin
+  fi
+}
+trap restore_plugin EXIT
+
+if [ -e .claude-plugin ]; then
+  CLAUDE_PLUGIN_BAK=$(mktemp -u /tmp/ai-capsule-claude-plugin.XXXXXX)
   mv .claude-plugin "$CLAUDE_PLUGIN_BAK"
 fi
 
 clawhub skill publish . --slug ai-capsule --version "$VERSION" --owner webpudge
 
-# 恢复 .claude-plugin
-if [ -n "$CLAUDE_PLUGIN_BAK" ]; then
-  mv "$CLAUDE_PLUGIN_BAK" .claude-plugin
-fi
+trap - EXIT
+restore_plugin
 
 echo "✅ ClawHub 发布完成 → v$VERSION"
