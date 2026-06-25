@@ -1,7 +1,7 @@
 ---
 name: ai-capsule
-description: Ranks your daily AI news feed by personal relevance — scores every article and surfaces the most useful ones first.
-version: 1.0.4
+description: Ranks your daily AI news feed by personal relevance — scores every article and surfaces the most useful ones first. To fetch X/Twitter posts, the daily run reads your local Chrome x.com cookies (via browser-cookie3, in-memory only) and calls the twitter-cli subprocess; it may auto-detect a local proxy on 127.0.0.1 to reach x.com, and writes reports/history/dedup state to your local data_dir. Sources include HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more, plus X/Twitter accounts.
+version: 1.0.5
 license: MIT
 emoji: "📰"
 homepage: https://github.com/WebPudge/ai-capsule
@@ -17,7 +17,7 @@ metadata:
 
 Scores and ranks your daily AI news feed based on what you actually care about. Tell it your role and familiar areas — it scores every article against your profile and ranks them so the most relevant ones appear first. Nothing is filtered out: every article makes it into the digest, just in the right order. Sources include HuggingFace Papers, OpenAI, Anthropic, DeepMind, Simon Willison, GitHub Trending, HN, Reddit, and more (17 total), plus X/Twitter accounts.
 
-**Trigger words:** say `daily`, `daily mode`, or `每日模式` to run the full digest. Paste a URL or article text to score a single article.
+**Trigger words:** run the full digest by saying `daily`, `daily mode`, `每日模式`, `每日摘要`, or `日报`. To avoid firing during ordinary conversation, the bare word `daily` only triggers as a short command — the message must start with a trigger word and contain little else (≤ ~6 words / ≤ 5 tokens after the trigger). `daily` appearing mid-sentence (e.g. "I read the daily news", "今天的 daily report 还没看") does NOT trigger the digest. When ambiguous, ask the user to confirm before fetching.
 
 **First time:** run `bash $SKILL_DIR/scripts/setup-env.sh` once, then say `daily` — Claude will walk you through a short setup (role, familiar areas, output language).
 
@@ -140,8 +140,9 @@ EOF
 
 - Input starts with `http(s)://` → **URL mode**
 - Input starts with `[` and looks like a JSON array → **Batch mode**
-- Input contains "daily", "daily mode", "每日模式", or "日报" → **Daily mode**
-- Ambiguous → ask the user
+- Input contains an explicit multi-word trigger — `daily mode`, `每日模式`, `每日摘要`, or `日报` — → **Daily mode** (matches anywhere in the message)
+- Bare `daily` → **Daily mode** only if it is a short command: the message **starts with** `daily` and has ≤ 5 tokens after it (roughly ≤ 6 words total). `daily` mid-sentence (e.g. "I read the daily news", "今天的 daily report 还没看") does NOT trigger.
+- Ambiguous → ask the user to confirm before fetching
 
 ### Step 1: Content Retrieval
 
